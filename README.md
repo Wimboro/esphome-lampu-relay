@@ -1,6 +1,6 @@
 # ESPHome Lampu Relay
 
-Kontrol **3 lampu 220 V** dari Home Assistant, plus **3 saklar dinding fisik**, memakai ESP32-C3 Super Mini dan modul relay 5 V tanpa optocoupler.
+Kontrol **3 lampu 220 V** dari Home Assistant, plus **3 saklar listrik dinding biasa** yang hanya dipakai sebagai jumper GPIO ke GND, memakai ESP32-C3 Super Mini dan modul relay 5 V tanpa optocoupler.
 
 Firmware: [ESPHome](https://esphome.io/). Lisensi: [MIT](LICENSE).
 
@@ -25,7 +25,7 @@ Jangan pakai push-pull 3.3 V ke IN. Banyak modul 5 V tanpa opto tidak klik, atau
 |---|---|---|
 | 1 | ESP32-C3 Super Mini | USB-C, 4 MB flash |
 | 3 | Relay 5 V 1 channel | JQC3F-05VDC-C, **tanpa** optocoupler, header IN / GND / VCC |
-| 3 | Saklar dinding | Kontak kering (2 kutub). Bukan saklar 220 V |
+| 3 | Saklar dinding listrik biasa | 220 V dilepas. Pakai kontak **merah** dan **putih** di mekanisme, **bukan** baut kuningan |
 | — | USB-C 5 V | Menyuplai ESP dan VCC ketiga relay |
 
 <p align="center">
@@ -34,7 +34,7 @@ Jangan pakai push-pull 3.3 V ke IN. Banyak modul 5 V tanpa opto tidak klik, atau
   <img src="picture/switch-saklar-lampu.png" alt="Belakang saklar dinding kontak kering" width="220">
 </p>
 
-Saklar di foto: dua sekrup kuningan di kiri/kanan rocker. Itu yang dihubungkan ke GPIO dan GND.
+Saklar di foto adalah saklar listrik biasa. Yang disambung ke ESP: kotak **putih** (GPIO) dan **merah** (GND) di mekanisme hitam. Baut kuningan kiri/kanan adalah terminal 220 V lama — **jangan dipakai**. On = merah terhubung ke putih = GPIO ke GND.
 
 ## Peta pin
 
@@ -43,11 +43,11 @@ Saklar di foto: dua sekrup kuningan di kiri/kanan rocker. Itu yang dihubungkan k
 | Lampu A → Relay A IN | 4 | oranye |
 | Lampu B → Relay B IN | 2 | kuning |
 | Lampu C → Relay C IN | 6 | hijau |
-| Saklar A | 9 | cyan |
-| Saklar B | 8 | ungu |
-| Saklar C | 5 | biru |
+| Saklar A | 9 → kontak **putih** | cyan |
+| Saklar B | 8 → kontak **putih** | ungu |
+| Saklar C | 5 → kontak **putih** | biru |
 | VCC ketiga relay | pin **5V** (dari USB-C) | merah |
-| GND ESP + relay + saklar | pin **G** | abu-abu |
+| GND ESP + relay + saklar | pin **G** → kontak **merah** saklar | abu-abu |
 
 GPIO **2** dipakai Lampu B dan sudah diuji di Super Mini ini (open-drain ke IN relay).
 
@@ -65,9 +65,9 @@ Sinyal 3.3 V dan 220 V dipisah total.
 **Sisi ESP (aman disentuh):**
 
 1. USB-C 5 V ke Super Mini. Pin **5V** board → **VCC** ketiga relay.
-2. **GND** board → **GND** ketiga relay → satu kutub setiap saklar.
+2. **GND** board → **GND** ketiga relay → kontak **merah** setiap saklar.
 3. GPIO 4 / 2 / 6 → **IN** Relay A / B / C.
-4. GPIO 9 / 8 / 5 → kutub lain Saklar A / B / C.
+4. GPIO 9 / 8 / 5 → kontak **putih** Saklar A / B / C.
 
 **Sisi 220 VAC (hanya di sekrup relay):**
 
@@ -79,7 +79,7 @@ Di modul fisik, header IN/GND/VCC ada di **seberang** sekrup COM/NO/NC. Diagram 
 
 ### Peringatan
 
-- Saklar dinding **bukan** 220 V. Di bak saklar hanya GPIO dan GND.
+- Saklar tetap model listrik biasa, tapi **220 V dilepas**. Di bak saklar hanya kontak merah (GND) dan putih (GPIO). Baut kuningan tidak disambung.
 - 220 V hanya di terminal sekrup relay. Matikan MCB sebelum merakit sisi AC.
 - Relay 10 A / 250 VAC. Sesuaikan dengan beban lampu.
 

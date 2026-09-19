@@ -1,9 +1,10 @@
 ---
-# ESP32-C3 Super Mini: 3 relay 5 V (tanpa optocoupler) + 3 saklar dinding kontak kering.
-# Saklar = 3.3 V ke GND, BUKAN 220 V. Lampu 220 V hanya di COM/NO relay.
+# ESP32-C3 Super Mini: 3 relay 5 V (tanpa optocoupler) + 3 saklar listrik biasa.
+# Saklar = jumper GPIO ke GND lewat kontak MERAH & PUTIH (bukan baut 220 V).
+# Lampu 220 V hanya di COM/NO relay.
 # 5V USB → VCC ketiga modul. GND bersama.
 # ON = open-drain tarik IN ke GND. OFF = lepas pin (modul pull IN ke 5V).
-# Relay IN: GPIO 4 / 2 / 6. Saklar: GPIO 9 / 8 / 5.
+# Relay IN: GPIO 4 / 2 / 6. Saklar: GPIO 9 / 8 / 5 ke putih; GND ke merah.
 esphome:
   name: lampu-relay
   friendly_name: Lampu Relay
